@@ -3,6 +3,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const getRecipeById = require('./controllers/getRecipeById.js');
+const getRecipeByName = require('./controllers/getRecipesByName.js');
+const createRecipe = require('./controllers/createRecipe.js');
+const getDiets = require('./controllers/getDiets.js')
+const { API_KEY } = process.env;
 
 require('./db.js');
 
@@ -31,5 +36,44 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.error(err);
   res.status(status).send(message);
 });
+
+server.get('/diets', async (req, res) => {
+  try {
+    const diets = await getDiets();
+    res.status(200).send(diets);
+  } catch (error) {
+    res.status(400).send({error: error.message})
+  }
+})
+
+server.get('/recipes/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await getRecipeById(id);
+    res.status(200).send(recipe)
+  } catch (error) {
+    res.status(400).send({error: error.message})
+  }
+})
+
+server.get('/recipes', async (req, res) => {
+  try {
+    const { name } = req.query;
+    const recipes = await getRecipeByName(name);
+    res.status(200).send(recipes);
+  } catch (error) {
+    res.status(400).send({error: error.message});
+  }
+})
+
+server.post('/recipes', async (req, res) => {
+  try {
+    const { id, name, image, summary, level, process, diets } = req.body;
+    const newRecipe = await createRecipe({id, name, image, summary, level, process, diets});
+    res.status(200).send(newRecipe);
+  } catch (error) {
+    res.status(400).send({error: error.message})
+  }
+})
 
 module.exports = server;
