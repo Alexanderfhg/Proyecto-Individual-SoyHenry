@@ -1,0 +1,75 @@
+body,
+html {    
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100vh;
+}
+
+.cuadroUno {
+    position: relative;
+    background-color: #13242f;    
+    overflow: hidden;
+}
+
+.cuadroUno h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: whitesmoke;
+    transform: translate(-50%, -50%);
+    margin: 0%;
+}
+
+.cuadroDos {
+    position: relative;
+    overflow: hidden;
+}
+
+
+.cuadroTres {
+    position: relative;
+    overflow: hidden;
+}
+
+.cuadroCuatro {
+    background-color: #467647;
+    position: relative;
+    overflow: hidden;
+}
+
+.cuadroCuatro button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: black;
+    padding: 20px;
+    transform: translate(-50%, -50%);
+    margin: 0%;   
+}
+
+.cuadroDos img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cuadroTres img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 
+.color1 {color: #000005;}
+.color2 {color: #13242f;}
+.color3 {color: #3b5a65;}
+.color4 {color: #6d9198;}
+.color5 {color: #79aead;}
+ */

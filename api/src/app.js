@@ -7,7 +7,6 @@ const getRecipeById = require('./controllers/getRecipeById.js');
 const getRecipeByName = require('./controllers/getRecipesByName.js');
 const createRecipe = require('./controllers/createRecipe.js');
 const getDiets = require('./controllers/getDiets.js')
-const { API_KEY } = process.env;
 
 require('./db.js');
 
