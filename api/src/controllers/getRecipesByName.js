@@ -8,7 +8,7 @@ const getRecipeByName = async (name) => {
     console.log('entrando a la funcioón GetRecipeByName');
     console.log(name);
     try {
-        const apiRecipes = (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name}&number=100&apiKey=${API_KEY}`)).data.results;
+        const apiRecipes = (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&query=${name}&number=100&apiKey=${API_KEY}`)).data.results;
         const dbRecipes = await Recipe.findAll({
             where: {
                 name: {[Op.iLike]: `%${name.toLowerCase()}%`}
@@ -20,6 +20,7 @@ const getRecipeByName = async (name) => {
         }
         return allRecipes;
     } catch (error) {
+        console.log(error)
         throw Error (error)
     }
 }

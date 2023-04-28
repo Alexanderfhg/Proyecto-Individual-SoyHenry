@@ -1,21 +1,35 @@
 .card {
-    width: 300px;
+    width: 95%;
     transition: all 0.2s;
     /* position: relative;
     margin: 2rem;
     align-items: center;
     border: 5px solid; */
     position: relative;
-    margin: 2rem;
+    /* margin: 2rem; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid;
+    /* border: .2px solid; */
+    /* border-left: .1px; */
+    /* padding: 15px; */
 }
 
-.card:hover {
-    transform: scale(1.09);
+.card button {
+    background-color: transparent;
+    border:0;
 }
+
+.card h3 {
+    position: absolute;
+    /* color: white; */
+    padding: 2px;
+    background-color: aquamarine;
+}
+
+/* .card:hover {
+    transform: scale(1.09);
+} */
 
 .cardImg {
     width: 100%;

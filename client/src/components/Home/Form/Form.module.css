@@ -1,0 +1,49 @@
+.nuevaRecetaFormulario {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f1f1f1;
+}
+
+.nuevaRecetaFormulario div {
+    margin-bottom: 10px;
+}
+
+.nuevaRecetaFormulario label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.nuevaRecetaFormulario input[type="text"],
+.nuevaRecetaFormulario textarea,
+.nuevaRecetaFormulario select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /* Asegura que el tamaño incluya el relleno */
+}
+
+.nuevaRecetaFormulario input[type="text"].nombre,
+.nuevaRecetaFormulario input[type="text"].level,
+.nuevaRecetaFormulario input[type="text"].image {
+    width: 50%;
+    /* Ancho personalizado para los campos de nombre, nivel e imagen */
+}
+
+.nuevaRecetaFormulario button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.nuevaRecetaFormulario button:hover {
+    background-color: #45a049;
+}
