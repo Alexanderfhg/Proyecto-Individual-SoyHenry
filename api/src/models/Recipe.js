@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
       autoIncrement:true,
       primaryKey:true
     },
-    name: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
     summary: {
       type: DataTypes.TEXT
     },
-    level: {
+    healthScore: {
       type: DataTypes.INTEGER
     },
     process: {

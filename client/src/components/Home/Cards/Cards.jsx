@@ -53,7 +53,7 @@ export default function Cards(props) {
                     </div>
                 </div>
                 <div className={styles.formContainer}>
-                    <Form />
+                    <Form createRecipe={props.createRecipe} />
                 </div>
             </div>
         )

@@ -2,137 +2,195 @@ import { useState } from 'react';
 import styles from './Form.module.css';
 import validate from './validation';
 
-export default function Form(prop) {
+export default function Form(props) {
+
     const [formulario, setFormulario] = useState({
-        name: '',
+        title: '',
         image: '',
         summary: '',
-        level: '',
+        healthScore: 0,
         process: '',
-        dietas: [],
+        diets: [],
     });
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
+        // console.log(event)
+        const { name, value, type } = event.target;
+
+        let parsedNum = value
+        if(type === 'number'){
+            parsedNum = parseInt(parsedNum)
+        }
         setFormulario((prevFormulario) => ({
             ...prevFormulario,
-            [name]: value,
+            [name]: parseInt(parsedNum),
         }));
+        // console.log(formulario)
     };
 
-    const handleDietasChange = (event) => {
+    const handleDietsChange = (event) => {
         const { value, checked } = event.target;
         setFormulario((prevFormulario) => {
-            if (value === 'todas' && checked) {
-                return {
-                    ...prevFormulario,
-                    dietas: ['todas'],
-                };
-            }
+            console.log(value, checked)
 
-            let newDietas = [...prevFormulario.dietas];
+            let newDiets = [...prevFormulario.diets];
             if (checked) {
-                newDietas.push(value);
+                newDiets.push(parseInt(value));
             } else {
-                newDietas = newDietas.filter((dieta) => dieta !== value);
+                newDiets = newDiets.filter((diet) => diet !== parseInt(value));
             }
+            console.log(newDiets)
 
             return {
                 ...prevFormulario,
-                dietas: newDietas,
+                diets: newDiets,
             };
         });
+
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        props.createRecipe(formulario);
 
-        // Aquí puedes enviar los datos del formulario al servidor o realizar cualquier acción necesaria
-
-        // Reiniciar los campos del formulario
         setFormulario({
-            name: '',
+            title: '',
             image: '',
             summary: '',
-            level: '',
+            healthScore: 0,
             process: '',
-            dietas: [],
+            diets: [],
         });
     };
 
     return (
         <form className={styles.nuevaRecetaFormulario} onSubmit={handleSubmit}>
             <div className={styles.name}>
-                <label htmlFor="name">Nombre:</label>
-                <input type="text" id="name" name="name" value={formulario.name} onChange={handleInputChange} required />
+                <label htmlFor="title">Nombre:</label>
+                <input type="text" id="title" name="title" value={formulario.title} onChange={handleInputChange} />
             </div>
 
             <div className={styles.image}>
                 <label htmlFor="image">Imagen:</label>
-                <input type="text" id="image" name="image" value={formulario.image} onChange={handleInputChange} required />
+                <input type="text" id="image" name="image" value={formulario.image} onChange={handleInputChange} />
             </div>
 
             <div>
                 <label htmlFor="summary">Resumen:</label>
-                <textarea id="summary" name="summary" value={formulario.summary} onChange={handleInputChange} required />
+                <textarea id="summary" name="summary" value={formulario.summary} onChange={handleInputChange} />
             </div>
 
             <div className={styles.level}>
-                <label htmlFor="level">Nivel:</label>
-                <select id="level" name="level" value={formulario.level} onChange={handleInputChange} required>
-                    <option value="">Seleccione un nivel</option>
-                    <option value="Fácil">Fácil</option>
-                    <option value="Intermedio">Intermedio</option>
-                    <option value="Difícil">Difícil</option>
-                </select>
+                <label htmlFor="healthScore">Health Score:</label>
+                <input type="number" id='healthScore' name='healthScore' value={formulario.healthScore} onChange={handleInputChange} />
             </div>
 
             <div>
                 <label htmlFor="process">Proceso:</label>
-                <textarea id="process" name="process" value={formulario.process} onChange={handleInputChange} required />
+                <textarea id="process" name="process" value={formulario.process} onChange={handleInputChange} />
             </div>
 
             <div>
-                <label>Seleccione las dietas:</label>
+                <label>Seleccione las diets:</label>
                 <label>
                     <input
                         type="checkbox"
-                        name="dietas"
-                        value="Vegana"
-                        checked={formulario.dietas.includes('Vegana')}
-                        onChange={handleDietasChange}
+                        name="diets"
+                        value='1'
+                        checked={formulario.diets.includes(1)}
+                        onChange={handleDietsChange}
                     />
-                    Vegana
+                    gluten free
                 </label>
                 <label>
                     <input
                         type="checkbox"
-                        name="dietas"
-                        value="Vegetariana"
-                        checked={formulario.dietas.includes('Vegetariana')}
-                        onChange={handleDietasChange}
+                        name="diets"
+                        value='2'
+                        checked={formulario.diets.includes(2)}
+                        onChange={handleDietsChange}
                     />
-                    Vegetariana
+                    dairy free
                 </label>
                 <label>
                     <input
                         type="checkbox"
-                        name="dietas"
-                        value="Sin gluten"
-                        checked={formulario.dietas.includes('Sin gluten')}
-                        onChange={handleDietasChange}
+                        name="diets"
+                        value='3'
+                        checked={formulario.diets.includes(3)}
+                        onChange={handleDietsChange}
                     />
-                    Sin gluten
+                    lacto ovo vegetarian
                 </label>
                 <label>
                     <input
                         type="checkbox"
-                        name="dietas"
-                        value="Baja en grasas"
-                        checked={formulario.dietas.includes('Baja en grasas')}
-                        onChange={handleDietasChange}
+                        name="diets"
+                        value='4'
+                        checked={formulario.diets.includes(4)}
+                        onChange={handleDietsChange}
                     />
-                    Baja en grasas
+                    vegan
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        name="diets"
+                        value='5'
+                        checked={formulario.diets.includes(5)}
+                        onChange={handleDietsChange}
+                    />
+                    paleolithic
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        name="diets"
+                        value='6'
+                        checked={formulario.diets.includes(6)}
+                        onChange={handleDietsChange}
+                    />
+                    primal
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        name="diets"
+                        value='7'
+                        checked={formulario.diets.includes(7)}
+                        onChange={handleDietsChange}
+                    />
+                    whole 30
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        name="diets"
+                        value='8'
+                        checked={formulario.diets.includes(8)}
+                        onChange={handleDietsChange}
+                    />
+                    pescatarian
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        name="diets"
+                        value='9'
+                        checked={formulario.diets.includes(9)}
+                        onChange={handleDietsChange}
+                    />
+                    ketogenic
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        name="diets"
+                        value='10'
+                        checked={formulario.diets.includes(10)}
+                        onChange={handleDietsChange}
+                    />
+                    fodmap friendly
                 </label>
                 {/* Agrega más checkboxes según tus necesidades */}
             </div>

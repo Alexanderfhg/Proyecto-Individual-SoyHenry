@@ -18,6 +18,7 @@ const getDiets = async () => {
                 const newDiet = await Diet.create({ name: diet });
                 return newDiet;
             }))
+            
             const dietsNames = newDiets.map(diet => diet.name);
             return dietsNames;
         } else {

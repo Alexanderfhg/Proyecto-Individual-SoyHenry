@@ -32,12 +32,28 @@ function App() {
     setDetail(apiDetail.data)
   }
 
+  async function createRecipe (newRecipe) {
+    try {
+      const getDiets = await axios.get('http://localhost:3001/diets');
+      console.log("Dietas creadas -> ", getDiets.data)
+      try {
+        console.log(newRecipe);
+        const recipe = await axios.post(`http://localhost:3001/recipes`, newRecipe)
+        console.log("nueva receta -> ", recipe.data)        
+      } catch (recipeError) {
+        throw Error (recipeError)
+      }
+    } catch (dietsError) {
+      throw Error (dietsError);
+    }
+  }
+
   return (
     <div className="App">
       {location.pathname !== '/' && <Nav onSearch={onSearch} />}
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path='/home' element={recipes.length !== 0 && <Cards recipes={recipes} getDetail={getDetail} />} />
+        <Route path='/home' element={recipes.length !== 0 && <Cards createRecipe={createRecipe} recipes={recipes} getDetail={getDetail} />} />
         <Route path='/detail/:id' element={<Detail detail={detail} />} />
       </Routes>
     </div>

@@ -67,8 +67,8 @@ server.get('/recipes', async (req, res) => {
 
 server.post('/recipes', async (req, res) => {
   try {
-    const { id, name, image, summary, level, process, diets } = req.body;
-    const newRecipe = await createRecipe({id, name, image, summary, level, process, diets});
+    const { id, title, image, summary, healthScore, process, diets } = req.body;
+    const newRecipe = await createRecipe({id, title, image, summary, healthScore, process, diets});
     res.status(200).send(newRecipe);
   } catch (error) {
     res.status(400).send({error: error.message})

@@ -3,10 +3,10 @@ const { Recipe } = require('../db');
 const createRecipe = async (recipe) => {
     try {
         const newRecipe = await Recipe.create({
-            name: recipe.name,
+            title: recipe.title,
             image: recipe.image,
             summary: recipe.summary,
-            level: recipe.level,
+            healthScore: recipe.healthScore,
             process: recipe.process
         })
         newRecipe.addDiets(recipe.diets)
