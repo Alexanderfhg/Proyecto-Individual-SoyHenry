@@ -1,24 +1,45 @@
+import { useEffect, useState } from 'react';
 import styles from './Detail.module.css';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-let count = 0;
 export default function Detail(props) {
 
-    if (Object.keys(props.detail).length !== 0 && count !== 0) {
-        console.log(props.detail)
-        count = 0;
+    const [detail, setDetail] = useState({});
+    const [loading, setLoading] = useState(true);
+    const { id } = useParams();
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+            try {
+                const apiDetail = await axios.get(`http://localhost:3001/recipes/${id}`);
+                setDetail(apiDetail.data);
+                setLoading(false);
+            } catch (error) {
+                console.error(error);
+                setLoading(false);
+            }
+        };
+
+
+        fetchData();
+    }, [id]);
+
+    if (loading) {
         return (
             <div>
-                <h1>{props.detail.title}</h1>
-                <div dangerouslySetInnerHTML = {{ __html: props.detail.summary}}></div>
-                <img src={props.detail.image} alt="Image Food" />
-            </div>
-        )
-    } else if(count === 0){
-        count++;
-        return (
-            <div>
-                <h1>Cargando...</h1>
+                <h2>Cargando...</h2>
             </div>
         )
     }
+
+    // console.log("entrando a los detalles")
+    return (
+        <div>
+            <h1>{detail.title}</h1>
+            <div dangerouslySetInnerHTML={{ __html: detail.summary }}></div>
+            <img src={detail.image} alt="Image Food" />
+        </div>
+    )
 }

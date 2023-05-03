@@ -3,6 +3,7 @@ const { Recipe } = require('../db');
 const createRecipe = async (recipe) => {
     try {
         const newRecipe = await Recipe.create({
+            id: recipe.id,
             title: recipe.title,
             image: recipe.image,
             summary: recipe.summary,

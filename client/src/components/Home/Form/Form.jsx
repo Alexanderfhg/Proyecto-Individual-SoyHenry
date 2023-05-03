@@ -5,12 +5,13 @@ import validate from './validation';
 export default function Form(props) {
 
     const [formulario, setFormulario] = useState({
+        id: 20000000,
         title: '',
         image: '',
         summary: '',
         healthScore: 0,
         process: '',
-        diets: [],
+        diets: []
     });
 
     const handleInputChange = (event) => {
@@ -18,12 +19,12 @@ export default function Form(props) {
         const { name, value, type } = event.target;
 
         let parsedNum = value
-        if(type === 'number'){
-            parsedNum = parseInt(parsedNum)
-        }
+        // if(type === 'number'){
+        //     parsedNum = parseInt(parsedNum)
+        // }
         setFormulario((prevFormulario) => ({
             ...prevFormulario,
-            [name]: parseInt(parsedNum),
+            [name]: parsedNum,
         }));
         // console.log(formulario)
     };
@@ -54,6 +55,7 @@ export default function Form(props) {
         props.createRecipe(formulario);
 
         setFormulario({
+            id: formulario.id + 1,
             title: '',
             image: '',
             summary: '',
@@ -61,6 +63,7 @@ export default function Form(props) {
             process: '',
             diets: [],
         });
+        console.log(formulario);
     };
 
     return (
@@ -87,7 +90,7 @@ export default function Form(props) {
 
             <div>
                 <label htmlFor="process">Proceso:</label>
-                <textarea id="process" name="process" value={formulario.process} onChange={handleInputChange} />
+                <textarea id="process" name="process"  value={formulario.process}  onChange={handleInputChange} />
             </div>
 
             <div>
