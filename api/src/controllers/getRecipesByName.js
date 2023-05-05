@@ -22,7 +22,7 @@ const getRecipeByName = async (title) => {
             // dbRecipesData = dbr;
         }
         // console.log(dbRecipesData)
-        const allRecipes = [...apiRecipes, ...dbRecipesData]
+        const allRecipes = [...dbRecipesData, ...apiRecipes]
         console.log(allRecipes)
         // if(allRecipes.length === 0){
             // console.log("No se encontraron recetas")
@@ -31,7 +31,7 @@ const getRecipeByName = async (title) => {
         // }
         return allRecipes;
     } catch (error) {
-        // console.log(error)
+        console.log(error.message)
         throw Error (error)
     }
 }

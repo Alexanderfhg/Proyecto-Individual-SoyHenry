@@ -8,6 +8,7 @@ export default function Detail(props) {
     const [detail, setDetail] = useState({});
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
+    console.log(detail)
 
     useEffect(() => {
 
@@ -29,7 +30,7 @@ export default function Detail(props) {
     if (loading) {
         return (
             <div>
-                <h2>Cargando...</h2>
+                <span className={styles.loader}></span>
             </div>
         )
     }

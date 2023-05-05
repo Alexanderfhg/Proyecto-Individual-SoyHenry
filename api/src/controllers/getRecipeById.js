@@ -27,6 +27,7 @@ const getRecipeById = async (id) => {
                 instructions: recipe.data.analyzedInstructions[0].steps
             }
         } catch (error) {
+            // console.log(error.message)
             throw Error(error)
         }
     } else {

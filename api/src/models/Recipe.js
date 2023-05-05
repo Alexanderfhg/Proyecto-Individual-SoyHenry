@@ -24,6 +24,9 @@ module.exports = (sequelize) => {
     },
     process: {
       type: DataTypes.TEXT
+    },
+    diets: {
+      type: DataTypes.ARRAY(DataTypes.STRING)
     }
   }, { timestamps: false });
 };

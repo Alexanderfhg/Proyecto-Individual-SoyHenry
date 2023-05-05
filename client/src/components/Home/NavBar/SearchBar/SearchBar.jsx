@@ -7,6 +7,7 @@ export default function (props) {
 
     function handleChange (event) {
         setSearch(event.target.value);
+        // props.onSearch(event.target.value);
     }
 
     function handleKeyDown (event) {

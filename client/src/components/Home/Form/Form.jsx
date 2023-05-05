@@ -16,15 +16,11 @@ export default function Form(props) {
 
     const handleInputChange = (event) => {
         // console.log(event)
-        const { name, value, type } = event.target;
-
-        let parsedNum = value
-        // if(type === 'number'){
-        //     parsedNum = parseInt(parsedNum)
-        // }
+        const { name, value } = event.target;
+        
         setFormulario((prevFormulario) => ({
             ...prevFormulario,
-            [name]: parsedNum,
+            [name]: value
         }));
         // console.log(formulario)
     };
@@ -44,7 +40,7 @@ export default function Form(props) {
 
             return {
                 ...prevFormulario,
-                diets: newDiets,
+                diets: newDiets
             };
         });
 
@@ -63,7 +59,7 @@ export default function Form(props) {
             process: '',
             diets: [],
         });
-        console.log(formulario);
+        // console.log(formulario);
     };
 
     return (
@@ -94,7 +90,7 @@ export default function Form(props) {
             </div>
 
             <div>
-                <label>Seleccione las diets:</label>
+                <label>Seleccione las dietas:</label>
                 <label>
                     <input
                         type="checkbox"
@@ -194,8 +190,7 @@ export default function Form(props) {
                         onChange={handleDietsChange}
                     />
                     fodmap friendly
-                </label>
-                {/* Agrega más checkboxes según tus necesidades */}
+                </label>        
             </div>
             <button type="submit">Enviar</button>
         </form>
