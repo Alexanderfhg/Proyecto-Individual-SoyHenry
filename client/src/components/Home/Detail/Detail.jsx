@@ -29,18 +29,42 @@ export default function Detail(props) {
 
     if (loading) {
         return (
-            <div>
+            <div className={styles.loadingContainer}>
                 <span className={styles.loader}></span>
             </div>
         )
     }
 
     // console.log("entrando a los detalles")
-    return (
-        <div>
-            <h1>{detail.title}</h1>
-            <div dangerouslySetInnerHTML={{ __html: detail.summary }}></div>
-            <img src={detail.image} alt="Image Food" />
-        </div>
-    )
+    if(detail.id < 2000000){
+        return (
+            <div>
+                <h2>{detail.title}</h2>
+                <div dangerouslySetInnerHTML={{ __html: detail.summary }}></div>
+                <h3>healthScore: {detail.healthScore}</h3>
+                {detail.diets.map((diet, index) => <h5 key={index}>{diet}</h5>)}
+                <img src={detail.image} alt="Image Food" />
+                {detail.instructions.map(instruction => {
+                    return (
+                        <div key={instruction.number}>
+                            <h4>{instruction.number}</h4>
+                            {instruction.ingredients.map((ingredient, index) => <h5 key={index}>{ingredient.name}</h5>)}
+                            <p>{instruction.step}</p>
+                        </div>
+                    )
+                })}
+            </div>
+        )        
+    } else {
+        return(
+            <div>
+                <h2>{detail.title}</h2>
+                <div>{detail.summary}</div>
+                <h3>healthScore: {detail.healthScore}</h3>
+                {detail.diets.map((diet, index) => <h5 key={index}>{diet}</h5>)}
+                <img src={detail.image} alt="Image Food" />
+                <h4>{detail.process}</h4>
+            </div>
+        )
+    }
 }

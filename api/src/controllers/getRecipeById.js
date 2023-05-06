@@ -12,9 +12,17 @@ const getRecipeById = async (id) => {
                 `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
             )
             const dietType = () => {
-                if (recipe.data.vegetarian) return 'vegetarian';
-                if (recipe.data.vegan) return 'vegan';
-                if (recipe.data.glutenFree) return 'glutenFree;'
+                const diets = [];
+                if (recipe.data.vegetarian) diets.push('vegetarian');
+                if (recipe.data.vegan) diets.push('vegan');
+                if (recipe.data.glutenFree) diets.push('glutenFree');
+                return diets;
+            }
+            const instructions = () => {
+                console.log("length ->", recipe.data.analyzedInstructions.length)
+                if (recipe.data.analyzedInstructions.length) {
+                    return recipe.data.analyzedInstructions[0].steps;
+                } else return [];
             }
             return {
                 id: recipe.data.id,
@@ -24,7 +32,7 @@ const getRecipeById = async (id) => {
                 image: recipe.data.image,
                 summary: recipe.data.summary,
                 diets: recipe.data.diets,
-                instructions: recipe.data.analyzedInstructions[0].steps
+                instructions: instructions()
             }
         } catch (error) {
             // console.log(error.message)
@@ -33,15 +41,17 @@ const getRecipeById = async (id) => {
     } else {
         try {
             const recipe = await Recipe.findByPk(id)
-            const { title, image, summary, healthScore, process } = recipe.dataValues;
+            console.log(recipe.dataValues.diets)
+            const { title, image, summary, healthScore, process, /* diets */ } = recipe.dataValues;
             return {
                 id: id,
                 title: title,
                 image: image,
                 summary: summary,
                 healthScore: healthScore,
-                process: process
-            }        
+                process: process,
+                diets: recipe.dataValues.diets
+            }
         } catch (error) {
             throw Error(error)
         }

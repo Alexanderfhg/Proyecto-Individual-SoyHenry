@@ -30,6 +30,7 @@ const createRecipe = async (recipe) => {
         console.log(newRecipe.dataValues)
         return newRecipe.dataValues;
     } catch (error) {
+        console.log(error)
         throw new Error (error);
     }
 }

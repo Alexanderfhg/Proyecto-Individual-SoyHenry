@@ -3,6 +3,7 @@ import SearchBar from './SearchBar/SearchBar'
 import { useNavigate } from 'react-router-dom';
 
 export default function NavBar(props) {
+
     const navigate = useNavigate();
     const goHome = () => navigate('/home');
     const logOut = () => navigate('/')

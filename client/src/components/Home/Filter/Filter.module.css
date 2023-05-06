@@ -1,0 +1,14 @@
+.checkboxContainer {
+    margin-top: 10px;
+    margin-left: 30px;
+  }
+  
+  .checkboxContainer label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .checkboxContainer input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  

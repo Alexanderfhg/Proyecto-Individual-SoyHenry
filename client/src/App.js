@@ -2,12 +2,9 @@ import './App.css';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Landing from './components/Landing/Landing';
 import Nav from './components/Home/NavBar/NavBar';
-import axios, { all } from 'axios';
+import axios from 'axios';
 import Cards from './components/Home/Cards/Cards'
 import Detail from './components/Home/Detail/Detail';
-import Form from './components/Home/Form/Form';
-
-
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -22,22 +19,39 @@ function App() {
   useEffect(() => {
     filterOrder(filterState);
   }, [filterState])
+  
+  const [formulario, setFormulario] = useState({
+    id: 20000000,
+    title: '',
+    image: '',
+    summary: '',
+    healthScore: 0,
+    process: '',
+    diets: []
+  });
+
+  const storedPage = localStorage.getItem('currentPage');
+  const initialPage = storedPage ? parseInt(storedPage) : 1;
+  const [currentPage, setCurrentPage] = useState(initialPage);
 
   const location = useLocation();
   const navigate = useNavigate();
   // var allRecipes = [];
 
-  async function onSearch(name) {
-    setRecipes([])
+  async function onSearch(title) {
+    console.log('aca')
+    setRecipesFilter([])
     navigate('/home');
     try {
-      const apiRecipes = await axios.get(`http://localhost:3001/recipes?name=${name}`);
+      const apiRecipes = await axios.get(`http://localhost:3001/recipes?name=${title}`);
       if (apiRecipes.data.length !== 0) {
         setRecipes(apiRecipes.data);
         setRecipesFilter(apiRecipes.data)
+        setCurrentPage(1);
         // allRecipes = apiRecipes.data;
         // console.log(allRecipes)
       } else {
+        filterOrder(filterState);
         window.alert("No se encontraron recetas con ese nombre")
       }
     } catch (error) {
@@ -95,11 +109,11 @@ function App() {
 
   async function createRecipe(newRecipe) {
     try {
-      const getDiets = await axios.get('http://localhost:3001/diets');
+      await axios.get('http://localhost:3001/diets');
       // console.log("Dietas creadas -> ", getDiets.data)
       try {
         // console.log(newRecipe);
-        const recipe = await axios.post(`http://localhost:3001/recipes`, newRecipe)
+        await axios.post(`http://localhost:3001/recipes`, newRecipe)
         // console.log("nueva receta -> ", recipe.data)
       } catch (recipeError) {
         throw Error(recipeError)
@@ -114,8 +128,18 @@ function App() {
       {location.pathname !== '/' && <Nav onSearch={onSearch} />}
       {/* {location.pathname === '/home' && <Form/>} */}
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path='/home' element={<Cards filterOrder={filterOrder} filterState={filterState} setFilterState={setFilterState} createRecipe={createRecipe} recipes={recipesFilter} />} />
+        <Route path="/" element={<Landing onSearch={onSearch} />} />
+        <Route path='/home' element={<Cards
+          formulario={formulario}
+          setFormulario={setFormulario}
+          filterOrder={filterOrder}
+          filterState={filterState}
+          setFilterState={setFilterState}
+          createRecipe={createRecipe}
+          recipes={recipesFilter}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />} />
         <Route path='/detail/:id' element={<Detail />} />
       </Routes>
     </div>

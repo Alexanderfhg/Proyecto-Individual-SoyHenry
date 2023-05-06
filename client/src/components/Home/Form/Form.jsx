@@ -4,28 +4,26 @@ import validate from './validation';
 
 export default function Form(props) {
 
-    const [formulario, setFormulario] = useState({
-        id: 20000000,
-        title: '',
-        image: '',
-        summary: '',
-        healthScore: 0,
-        process: '',
-        diets: []
-    });
+    const { formulario, setFormulario } = props;
+    const [errors, setErrors] = useState({});
 
     const handleInputChange = (event) => {
         // console.log(event)
         const { name, value } = event.target;
-        
+
         setFormulario((prevFormulario) => ({
             ...prevFormulario,
+            [name]: value
+        }));
+        setErrors(validate({
+            ...formulario,
             [name]: value
         }));
         // console.log(formulario)
     };
 
     const handleDietsChange = (event) => {
+        console.log("errors -> ", errors)
         const { value, checked } = event.target;
         setFormulario((prevFormulario) => {
             console.log(value, checked)
@@ -51,7 +49,7 @@ export default function Form(props) {
         props.createRecipe(formulario);
 
         setFormulario({
-            id: formulario.id + 1,
+            id: ++formulario.id,
             title: '',
             image: '',
             summary: '',
@@ -67,6 +65,7 @@ export default function Form(props) {
             <div className={styles.name}>
                 <label htmlFor="title">Nombre:</label>
                 <input type="text" id="title" name="title" value={formulario.title} onChange={handleInputChange} />
+                <p>{errors.title && errors.title}</p>
             </div>
 
             <div className={styles.image}>
@@ -86,7 +85,7 @@ export default function Form(props) {
 
             <div>
                 <label htmlFor="process">Proceso:</label>
-                <textarea id="process" name="process"  value={formulario.process}  onChange={handleInputChange} />
+                <textarea id="process" name="process" value={formulario.process} onChange={handleInputChange} />
             </div>
 
             <div>
@@ -119,7 +118,7 @@ export default function Form(props) {
                         checked={formulario.diets.includes(3)}
                         onChange={handleDietsChange}
                     />
-                    lacto ovo vegetarian
+                    Vegetarian
                 </label>
                 <label>
                     <input
@@ -190,7 +189,7 @@ export default function Form(props) {
                         onChange={handleDietsChange}
                     />
                     fodmap friendly
-                </label>        
+                </label>
             </div>
             <button type="submit">Enviar</button>
         </form>

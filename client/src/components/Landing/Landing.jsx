@@ -3,10 +3,12 @@ import styles from './Landing.module.css';
 import image1 from './img/image1.jpeg';
 import image2 from './img/image2.jpeg';
 
-export default function Landing(prop) {
+export default function Landing(props) {
 
     const navigate = useNavigate();
-    const goHome = () => navigate('/home');
+    const goHome = () => {
+        props.onSearch('');
+        navigate('/home')};
 
     return (
         <div className={styles.contenedor}>

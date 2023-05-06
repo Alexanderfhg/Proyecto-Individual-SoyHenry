@@ -23,7 +23,7 @@ export default function (props) {
                 onChange={handleChange}
                 value={search}
                 onKeyDown={handleKeyDown}
-                className="stules.input"
+                className={styles.input}
                 placeholder="Search..."
             />
         </div>
