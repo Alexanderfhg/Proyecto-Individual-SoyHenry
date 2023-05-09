@@ -1,64 +1,123 @@
-.loader {
-    animation: rotate 1s infinite;
-    height: 50px;
-    width: 50px;
-  }
+.container {
+  margin-top: 40px;
+  /* display: flex; */
+  justify-content: left;
+  /* flex-wrap: wrap; */
+  display: grid;
+  /* align-items: center; */
+  grid-template-columns: 2fr 6fr 2fr;
+  /* height: 100%; */
+  text-align: left;
+}
 
-  .loader:before,
-  .loader:after {
-    border-radius: 50%;
-    content: "";
-    display: block;
-    height: 20px;
-    width: 20px;
+.cardsContainer {
+  display: grid;
+  grid-template-rows: 10fr 1fr;
+}
+
+.buttonContainer {
+  display: flex;
+  /* position: absolute; */
+  /* display: grid; */
+  /* grid-template-columns: 1fr 1fr; */
+  /* height: 50px; */
+  justify-content: center;
+  align-items: center;
+  /* border: .1px solid; */
+}
+
+.buttonContainer button {
+  width: 30px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* margin-left: 50%;
+  margin-right: 50%; */
+  grid-template-rows: 1fr 1fr 1fr;
+  /* flex-wrap: wrap; */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.5rem;
+  color: black;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.formContainer {
+  margin-right: 35px;    
+}
+
+.loader {
+  animation: rotate 1s infinite;
+  height: 50px;
+  width: 50px;
+}
+
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 20px;
+  width: 20px;
+}
+.loader:before {
+  animation: ball1 1s infinite;
+  background-color: #fff;
+  box-shadow: 30px 0 0 #ff3d00;
+  margin-bottom: 10px;
+}
+.loader:after {
+  animation: ball2 1s infinite;
+  background-color: #ff3d00;
+  box-shadow: 30px 0 0 #fff;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg) scale(1.4) }
+  50% { transform: rotate(360deg) scale(1.6) }
+  100% { transform: rotate(720deg) scale(1.4) }
+}
+
+@keyframes ball1 {
+  0% {
+    box-shadow: 30px 0 0 #ff3d00;
   }
-  .loader:before {
-    animation: ball1 1s infinite;
-    background-color: #fff;
+  50% {
+    box-shadow: 0 0 0 #ff3d00;
+    margin-bottom: 0;
+    transform: translate(15px, 15px);
+  }
+  100% {
     box-shadow: 30px 0 0 #ff3d00;
     margin-bottom: 10px;
   }
-  .loader:after {
-    animation: ball2 1s infinite;
-    background-color: #ff3d00;
+}
+
+@keyframes ball2 {
+  0% {
     box-shadow: 30px 0 0 #fff;
   }
-
-  @keyframes rotate {
-    0% { transform: rotate(0deg) scale(1.4) }
-    50% { transform: rotate(360deg) scale(1.6) }
-    100% { transform: rotate(720deg) scale(1.4) }
+  50% {
+    box-shadow: 0 0 0 #fff;
+    margin-top: -20px;
+    transform: translate(15px, 15px);
   }
-
-  @keyframes ball1 {
-    0% {
-      box-shadow: 30px 0 0 #ff3d00;
-    }
-    50% {
-      box-shadow: 0 0 0 #ff3d00;
-      margin-bottom: 0;
-      transform: translate(15px, 15px);
-    }
-    100% {
-      box-shadow: 30px 0 0 #ff3d00;
-      margin-bottom: 10px;
-    }
+  100% {
+    box-shadow: 30px 0 0 #fff;
+    margin-top: 0;
   }
+}
 
-  @keyframes ball2 {
-    0% {
-      box-shadow: 30px 0 0 #fff;
-    }
-    50% {
-      box-shadow: 0 0 0 #fff;
-      margin-top: -20px;
-      transform: translate(15px, 15px);
-    }
-    100% {
-      box-shadow: 30px 0 0 #fff;
-      margin-top: 0;
-    }
-  }
+.loadingContainer {
+  margin-top: 18%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
   
   .recipeDetail {
     display: grid;
