@@ -24,7 +24,7 @@ const createRecipe = async (recipe) => {
             summary: recipe.summary,
             healthScore: recipe.healthScore,
             process: recipe.process,
-            diets: nameDiets 
+            diets: nameDiets
         })
         newRecipe.addDiets(recipe.diets)
         console.log(newRecipe.dataValues)

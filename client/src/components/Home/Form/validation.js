@@ -11,9 +11,9 @@ export default function validate (objInputs) {
         errors.summary = 'Max 500 characters';
     }
     if(objInputs.healthScore < 0){
-        errors.healthScore = '';
+        errors.healthScore = 'Min 0';
     } else if (objInputs.healthScore > 100){
-        errors.healthScore = '';
+        errors.healthScore = 'Max 100';
     }
     if(!objInputs.process){
         errors.process = 'The process is required';

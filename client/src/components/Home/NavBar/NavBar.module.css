@@ -1,6 +1,28 @@
 .navBarContainer {
-    display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
+    display: flex;
     align-items: center;
-    height: 4rem;
-}
+    justify-content: space-between;
+    background-color: #FFF;
+    padding: 1rem;
+  }
+  
+  .navItem {
+    margin-right: 1rem;
+  }
+  
+  .navButton {
+    background-color: #F69A33;
+    color: #FFF;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .navButton:hover {
+    background-color: #FFB347;
+    transform: scale(1.05);
+  }
+  

@@ -1,16 +1,22 @@
+import { useReducer, useState } from 'react';
 import styles from './Filter.module.css';
-
+import reducer, { initialState } from '../../../redux/reducer';
+import { setCurrentPage, setFilterState } from '../../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 export default function Filter(props) {
 
-    const { filterState, setFilterState, setCurrentPage } = props;
+    // const [state, dispatch] = useReducer(reducer, initialState);
+    const dispatch = useDispatch();
+    const state = useSelector((st) => st);
+    // const { filterState, setFilterState, setCurrentPage } = props;
 
     const handleFilterChange = (event) => {
-        console.log("cambiando filtro")
+        // console.log("cambiando filtro")
         const { name, value, checked } = event.target;
         // console.log(name, value, checked)
         if (name === 'diets') {
-            setFilterState((prevFilter) => {
-                let newDiets = [...prevFilter.diets];
+            const toDispatch = () => {
+                let newDiets = [...state.filterState.diets];
                 //   console.log(newDiets)
                 if (checked) {
                     newDiets.push(parseInt(value));
@@ -18,21 +24,24 @@ export default function Filter(props) {
                     newDiets = newDiets.filter((diet) => diet !== parseInt(value));
                 }
                 return {
-                    ...prevFilter,
+                    ...state.filterState,
                     diets: newDiets
                 }
-            })
+            }
+            dispatch(setFilterState(toDispatch()));
         } else {
-            setFilterState((prevFilter) => ({
-                ...prevFilter,
-                [name]: value
-            }))
+            
+            dispatch(setFilterState({...state.filterState, [name]: value}))
+            // dispatch(setFilterState((prevFilter) => ({
+            //     ...prevFilter,
+            //     [name]: value
+            // })))
         }
         // console.log(currentPage) 
-        setCurrentPage(1);
+        dispatch(setCurrentPage(1))
     }
 
-
+    
     return (
         <div>
             <div className={styles.checkboxContainer}>
@@ -42,7 +51,7 @@ export default function Filter(props) {
                         type="checkbox"
                         name="diets"
                         value='1'
-                        checked={filterState.diets.includes(1)}
+                        checked={state.filterState.diets.includes(1)}
                         onChange={handleFilterChange}
                     />
                     Vegetarian
@@ -52,7 +61,7 @@ export default function Filter(props) {
                         type="checkbox"
                         name="diets"
                         value='2'
-                        checked={filterState.diets.includes(2)}
+                        checked={state.filterState.diets.includes(2)}
                         onChange={handleFilterChange}
                     />
                     Vegan
@@ -62,7 +71,7 @@ export default function Filter(props) {
                         type="checkbox"
                         name="diets"
                         value='3'
-                        checked={filterState.diets.includes(3)}
+                        checked={state.filterState.diets.includes(3)}
                         onChange={handleFilterChange}
                     />
                     Gluten Free
@@ -75,7 +84,7 @@ export default function Filter(props) {
                         type="radio"
                         name="origin"
                         value="api"
-                        checked={filterState.origin === "api"}
+                        checked={state.filterState.origin === "api"}
                         onChange={handleFilterChange}
                     />
                     New recipes
@@ -85,7 +94,7 @@ export default function Filter(props) {
                         type="radio"
                         name="origin"
                         value="database"
-                        checked={filterState.origin === "database"}
+                        checked={state.filterState.origin === "database"}
                         onChange={handleFilterChange}
                     />
                     My recipes
@@ -95,7 +104,7 @@ export default function Filter(props) {
                         type="radio"
                         name="origin"
                         value="all"
-                        checked={filterState.origin === "all"}
+                        checked={state.filterState.origin === "all"}
                         onChange={handleFilterChange}
                     />
                     All recipes
@@ -108,7 +117,7 @@ export default function Filter(props) {
                         type="radio"
                         name="order"
                         value="nameAsc"
-                        checked={filterState.order === "nameAsc"}
+                        checked={state.filterState.order === "nameAsc"}
                         onChange={handleFilterChange}
                     />
                     Nombre (Ascendente)
@@ -118,7 +127,7 @@ export default function Filter(props) {
                         type="radio"
                         name="order"
                         value="nameDesc"
-                        checked={filterState.order === "nameDesc"}
+                        checked={state.filterState.order === "nameDesc"}
                         onChange={handleFilterChange}
                     />
                     Nombre (Descendente)
@@ -128,15 +137,15 @@ export default function Filter(props) {
                         type="radio"
                         name="order"
                         value="healthScore"
-                        checked={filterState.order === "healthScore"}
+                        checked={state.filterState.order === "healthScore"}
                         onChange={handleFilterChange}
                     />
                     Comida saludable
                 </label>
-                <button onClick={() => {                    
-                    setFilterState({diets: [], order: '', origin: 'all'});
-                    setCurrentPage(1);
-                    }}>Limpiar</button>
+                <button onClick={() => {
+                    dispatch(setFilterState({ diets: [], order: '', origin: 'all' }))
+                    dispatch(setCurrentPage(1))
+                }}>Limpiar</button>
             </div>
         </div>
     )

@@ -5,65 +5,66 @@ import Nav from './components/Home/NavBar/NavBar';
 import axios from 'axios';
 import Cards from './components/Home/Cards/Cards'
 import Detail from './components/Home/Detail/Detail';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
+import reducer, { initialState } from './redux/reducer';
+import { setRecipes, setRecipesFilter, setCurrentPage, setNotFound, setFilterState } from './redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
 
-  const [recipes, setRecipes] = useState([])
-  const [recipesFilter, setRecipesFilter] = useState([]);
-  const [filterState, setFilterState] = useState({
-    diets: [],
-    order: '',
-    origin: 'all'
-  });
-  useEffect(() => {
-    filterOrder(filterState);
-  }, [filterState])
-  
-  const [formulario, setFormulario] = useState({
-    id: 20000000,
-    title: '',
-    image: '',
-    summary: '',
-    healthScore: 0,
-    process: '',
-    diets: []
-  });
+  const dispatch = useDispatch();
+  const state = useSelector((st) => st);
 
-  const storedPage = localStorage.getItem('currentPage');
-  const initialPage = storedPage ? parseInt(storedPage) : 1;
-  const [currentPage, setCurrentPage] = useState(initialPage);
+
+
+  useEffect(() => {
+    filterOrder(state.filterState);
+  }, [state.filterState])
 
   const location = useLocation();
   const navigate = useNavigate();
-  // var allRecipes = [];
 
   async function onSearch(title) {
-    console.log('aca')
-    setRecipesFilter([])
+
+    // dispatch(setRecipesFilter([]))
+    // dispatch(setRecipes([]))
+    
     navigate('/home');
     try {
+      // dispatch(setRecipes(title))
       const apiRecipes = await axios.get(`http://localhost:3001/recipes?name=${title}`);
-      if (apiRecipes.data.length !== 0) {
-        setRecipes(apiRecipes.data);
-        setRecipesFilter(apiRecipes.data)
-        setCurrentPage(1);
-        // allRecipes = apiRecipes.data;
-        // console.log(allRecipes)
+      if (apiRecipes.data.length) {
+        // console.log('onSearch', apiRecipes.data)
+
+        dispatch(setRecipes(apiRecipes.data))
+        dispatch(setRecipesFilter(apiRecipes.data))
+
+        dispatch(setCurrentPage(1))
+        dispatch(setFilterState({
+          diets: [],
+          order: '',
+          origin: 'all'
+        }))
+
       } else {
-        filterOrder(filterState);
+        // console.log(state)
+        filterOrder(state.filterState)
         window.alert("No se encontraron recetas con ese nombre")
       }
     } catch (error) {
+      console.log(error)
       throw Error(error);
     }
   }
 
   async function filterOrder(filter) {
-    console.log(filter)
+    // console.log('dietas del fasdkjfña',state.recipes)
+    // console.log("filter -> " , filter)
+    // console.log(filter)
+    // dispatch(setNotFound(false))
     if (filter) {
       const { diets, order, origin } = filter;
-      const allRecipesCopy = [...recipes];
+      const allRecipesCopy = [...state.recipes];
       let filteredRecipes = allRecipesCopy;
 
       if (diets.includes(1)) {
@@ -76,7 +77,6 @@ function App() {
         filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('gluten free'));
       }
 
-      // Realizar el ordenamiento basado en la opción seleccionada
       switch (order) {
         case 'nameAsc':
           filteredRecipes.sort((a, b) => a.title.localeCompare(b.title));
@@ -91,17 +91,15 @@ function App() {
           break;
       }
 
-      // Realizar el filtrado basado en el origen seleccionado
       if (origin === 'database') {
         filteredRecipes = filteredRecipes.filter(recipe => recipe.id > 2000000);
       }
       if (origin === 'api') {
         filteredRecipes = filteredRecipes.filter(recipe => recipe.id < 2000000);
       }
-
-      // // Actualizar el estado 'recipes' con las recetas filtradas y ordenadas
-      // console.log(recipes)
-      setRecipesFilter(filteredRecipes);
+      else {
+        dispatch(setRecipesFilter(filteredRecipes))
+      }
     }
   }
 
@@ -110,11 +108,9 @@ function App() {
   async function createRecipe(newRecipe) {
     try {
       await axios.get('http://localhost:3001/diets');
-      // console.log("Dietas creadas -> ", getDiets.data)
       try {
-        // console.log(newRecipe);
+
         await axios.post(`http://localhost:3001/recipes`, newRecipe)
-        // console.log("nueva receta -> ", recipe.data)
       } catch (recipeError) {
         throw Error(recipeError)
       }
@@ -126,19 +122,12 @@ function App() {
   return (
     <div className="App">
       {location.pathname !== '/' && <Nav onSearch={onSearch} />}
-      {/* {location.pathname === '/home' && <Form/>} */}
       <Routes>
         <Route path="/" element={<Landing onSearch={onSearch} />} />
         <Route path='/home' element={<Cards
-          formulario={formulario}
-          setFormulario={setFormulario}
-          filterOrder={filterOrder}
-          filterState={filterState}
-          setFilterState={setFilterState}
+
           createRecipe={createRecipe}
-          recipes={recipesFilter}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+
         />} />
         <Route path='/detail/:id' element={<Detail />} />
       </Routes>
