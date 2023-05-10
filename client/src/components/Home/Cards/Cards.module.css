@@ -5,9 +5,10 @@
     /* flex-wrap: wrap; */
     display: grid;
     /* align-items: center; */
-    grid-template-columns: 2fr 6fr 2fr;
+    grid-template-columns: 2fr 7fr 3fr;
     /* height: 100%; */
     text-align: left;
+    
 }
 
 .cardsContainer {
@@ -23,8 +24,37 @@
     /* height: 50px; */
     justify-content: center;
     align-items: center;
+    
     /* border: .1px solid; */
 }
+.buttonPag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.buttonPag button {
+  background-color: #fff;
+  border: 1px solid #F69A33;
+  color: #F69A33;
+  font-size: 16px;
+  margin: 0 3.5px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.buttonPag button:hover:not(.selectedPage) {
+  background-color: #ddd;
+}
+
+.buttonPag .selectedPage {
+  background-color: #F69A33;
+  color: #fff;
+}
+
 
 .buttonContainer button {
     width: 30px;
@@ -32,17 +62,17 @@
 
 .cards {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     /* margin-left: 50%;
     margin-right: 50%; */
     grid-template-rows: 1fr 1fr 1fr;
     /* flex-wrap: wrap; */
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 0.5rem;
-    color: black;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+    /* font-size: 0.5rem; */
+    /* color: black; */
+    /* align-items: center; */
+    /* text-align: center; */
+    /* justify-content: center; */
 }
 
 .formContainer {

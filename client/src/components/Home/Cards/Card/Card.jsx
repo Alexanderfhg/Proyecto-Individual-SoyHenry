@@ -8,10 +8,21 @@ export default function Card(props) {
     const goDetail = () => navigate(`/detail/${props.id}`);
     return (
         <div className={styles.card}>
-            <button onClick={() => {goDetail()}}>
-                <h3>{props.title}</h3>
-                <img className={styles.cardImg} src={props.image} alt="imageFood" />
+            <button className={styles.buttonCard} onClick={() => { goDetail() }}>
+                <h3 className={styles.cardTitle}>{props.title}</h3>
+                <div className={styles.cardImgOverlay}>
+                    <img className={styles.cardImg} src={props.image} alt="imageFood" />
+                    <div className={styles.overlay}>
+                        <div className={styles.diets}>
+                            <ul>
+                                {props.diets.map((diet, index) => (
+                                    <li key={index}>{diet}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </button>
         </div>
-    )
+    );
 }

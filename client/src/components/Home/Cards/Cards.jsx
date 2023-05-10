@@ -14,10 +14,10 @@ export default function Cards(props) {
 
     // const { recipes, currentPage, setCurrentPage } = props;
     // console.log('estadoooo', state);
-    const totalPages = Math.ceil(state.recipesFilter.length / 9);
+    const totalPages = Math.ceil(state.recipesFilter.length / 8);
 
-    const startIndex = (state.currentPage - 1) * 9;
-    const endIndex = startIndex + 9;
+    const startIndex = (state.currentPage - 1) * 8;
+    const endIndex = startIndex + 8;
     const recipesForPage = state.recipesFilter.slice(startIndex, endIndex)
     const prev = '<', next = '>';
 
@@ -49,12 +49,10 @@ export default function Cards(props) {
     // }
 
     return (
+        
         <div className={styles.container}>
             <div>
-                <Filter
-                // setCurrentPage={setCurrentPage}
-                // filterState={props.filterState}
-                // setFilterState={props.setFilterState} 
+                <Filter                
                 />
             </div>
             {state.recipesFilter.length ? (
@@ -72,10 +70,10 @@ export default function Cards(props) {
                         ))}
                     </div>
                     <div className={styles.buttonContainer}>
-                        <div>
+                        <div className={styles.buttonPag}>
                             <button onClick={previousPage} disabled={state.currentPage === 1}>{prev}</button>
                         </div>
-                        <div>
+                        <div className={styles.buttonPag}>
                             {Array.from({ length: totalPages }, (_, index) => (
                                 <button
                                     key={index + 1}
@@ -86,7 +84,7 @@ export default function Cards(props) {
                                 </button>
                             ))}
                         </div>
-                        <div>
+                        <div className={styles.buttonPag}>
                             <button
                                 onClick={nextPage}
                                 disabled={state.currentPage === totalPages || state.recipes.length === 0}>{next}
@@ -101,9 +99,7 @@ export default function Cards(props) {
             )}
             <div className={styles.formContainer}>
                 <Form
-                    createRecipe={props.createRecipe}
-                // formulario={props.formulario} 
-                // setFormulario={props.setFormulario} 
+                    createRecipe={props.createRecipe}               
                 />
             </div>
         </div>

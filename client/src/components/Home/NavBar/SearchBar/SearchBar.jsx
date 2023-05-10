@@ -5,12 +5,12 @@ export default function (props) {
 
     const [search, setSearch] = useState("")
 
-    function handleChange (event) {
+    function handleChange(event) {
         setSearch(event.target.value);
         // props.onSearch(event.target.value);
     }
 
-    function handleKeyDown (event) {
+    function handleKeyDown(event) {
         if (event.code === 'Enter') {
             props.onSearch(search);
         }
@@ -19,11 +19,11 @@ export default function (props) {
     return (
         <div className={styles.searchBar}>
             <input
+                className={styles.searchInput}
                 type="text"
                 onChange={handleChange}
                 value={search}
                 onKeyDown={handleKeyDown}
-                className={styles.input}
                 placeholder="Search..."
             />
         </div>

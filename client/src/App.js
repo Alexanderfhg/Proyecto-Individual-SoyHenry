@@ -28,7 +28,7 @@ function App() {
 
     // dispatch(setRecipesFilter([]))
     // dispatch(setRecipes([]))
-    
+
     navigate('/home');
     try {
       // dispatch(setRecipes(title))
@@ -90,16 +90,13 @@ function App() {
         default:
           break;
       }
-
       if (origin === 'database') {
         filteredRecipes = filteredRecipes.filter(recipe => recipe.id > 2000000);
       }
       if (origin === 'api') {
         filteredRecipes = filteredRecipes.filter(recipe => recipe.id < 2000000);
       }
-      else {
-        dispatch(setRecipesFilter(filteredRecipes))
-      }
+      dispatch(setRecipesFilter(filteredRecipes))
     }
   }
 

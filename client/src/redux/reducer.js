@@ -1,14 +1,16 @@
-import { SET_CURRENT_PAGE, SET_FILTER_STATE, SET_FORMULARIO, SET_NOT_FOUND, SET_RECIPES, SET_RECIPES_FILTER } from "./actions";
+import { SET_APPLY_FILTER, SET_APPLY_ORDER, SET_CURRENT_PAGE, SET_FILTER_STATE, SET_FORMULARIO, SET_FORM_VISIBLE, SET_NOT_FOUND, SET_RECIPES, SET_RECIPES_FILTER, SET_SELECT_DIETS } from "./actions";
 
 const storedPage = localStorage.getItem('currentPage');
 const initialPage = storedPage ? parseInt(storedPage) : 1;
 
 export const initialState = {
     recipes: [],
-    contador: 0,
     recipesFilter: [],
     currentPage: initialPage,
-    notFound: false,
+    selectDiets: false,
+    applyFilter: false,
+    applyOrder: false,
+    formVisible: false,
     formulario: {
         id: 2000000,
         title: '',
@@ -58,6 +60,26 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 notFound: action.payload
+            }
+        case SET_SELECT_DIETS:
+            return {
+                ...state,
+                selectDiets: action.payload
+            }
+        case SET_APPLY_FILTER:
+            return {
+                ...state,
+                applyFilter: action.payload
+            }
+        case SET_APPLY_ORDER:
+            return {
+                ...state,
+                applyOrder: action.payload
+            }
+        case SET_FORM_VISIBLE:
+            return {
+                ...state,
+                formVisible: action.payload
             }
         default:
             return state;

@@ -43,9 +43,9 @@ export default function Filter(props) {
 
     
     return (
-        <div>
+        <div className={styles.filterContainer}>
+            {state.selectDiets ? (
             <div className={styles.checkboxContainer}>
-                <label>Seleccione las dietas:</label>
                 <label>
                     <input
                         type="checkbox"
@@ -56,6 +56,7 @@ export default function Filter(props) {
                     />
                     Vegetarian
                 </label>
+
                 <label>
                     <input
                         type="checkbox"
@@ -77,8 +78,10 @@ export default function Filter(props) {
                     Gluten Free
                 </label>
             </div>
+            ): null}
+            {state.applyFilter ? (
             <div className={styles.checkboxContainer}>
-                <label>Filtrar por origen:</label>
+                {/* <label>Filtrar por origen:</label> */}
                 <label>
                     <input
                         type="radio"
@@ -110,8 +113,10 @@ export default function Filter(props) {
                     All recipes
                 </label>
             </div>
+            ) : null}
+            {state.applyOrder ? (
             <div className={styles.checkboxContainer}>
-                <label>Ordenar por:</label>
+                {/* <label>Ordenar por:</label> */}
                 <label>
                     <input
                         type="radio"
@@ -142,11 +147,12 @@ export default function Filter(props) {
                     />
                     Comida saludable
                 </label>
-                <button onClick={() => {
+                <button className={styles.buttonClear} onClick={() => {
                     dispatch(setFilterState({ diets: [], order: '', origin: 'all' }))
                     dispatch(setCurrentPage(1))
                 }}>Limpiar</button>
             </div>
+            ) : null}
         </div>
     )
 }
