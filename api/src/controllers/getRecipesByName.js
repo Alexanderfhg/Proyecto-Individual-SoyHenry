@@ -21,19 +21,15 @@ const getRecipeByName = async (title) => {
           
         
         const dbRecipesData = [];
+        
         if(dbRecipes.length) {
             dbRecipes.forEach(recipe => dbRecipesData.push(recipe.dataValues))
-            // console.log(dbRecipesData)
-            // dbRecipesData = dbr;
+            
         }
         // console.log(dbRecipesData)
         const allRecipes = [...dbRecipesData, ...filteredApiRecipes]
         console.log(allRecipes)
-        // if(allRecipes.length === 0){
-            // console.log("No se encontraron recetas")
-            // throw Error ('No se encontraron Recetas');
-            // return "No se encontraron receta"
-        // }
+       
         return allRecipes;
     } catch (error) {
         console.log(error.message)

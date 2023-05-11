@@ -7,7 +7,6 @@ export default function (props) {
 
     function handleChange(event) {
         setSearch(event.target.value);
-        // props.onSearch(event.target.value);
     }
 
     function handleKeyDown(event) {
@@ -29,16 +28,5 @@ export default function (props) {
                 >
             </input>
         </div>
-
-        // <div className={styles.searchBar}>
-        //     <input
-        //         className={styles.searchInput}
-        //         type="text"
-        //         onChange={handleChange}
-        //         
-        //         onKeyDown={handleKeyDown}
-        //         placeholder="Search..."
-        //     />
-        // </div>
     )
 }

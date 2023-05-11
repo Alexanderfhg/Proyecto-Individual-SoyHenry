@@ -35,7 +35,6 @@ export default function Detail(props) {
         )
     }
 
-    // console.log("entrando a los detalles")
     if (detail.id < 2000000) {
         return (
             <div className={styles.recipeDetail}>

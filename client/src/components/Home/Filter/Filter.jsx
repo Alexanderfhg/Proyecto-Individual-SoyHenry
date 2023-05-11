@@ -4,7 +4,6 @@ import { setCurrentPage, setFilterState } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 export default function Filter() {
 
-    // const [state, dispatch] = useReducer(reducer, initialState);
     const dispatch = useDispatch();
     const state = useSelector((st) => st);
 
@@ -16,16 +15,12 @@ export default function Filter() {
             setClearButton(false);
         }
     })
-    // const { filterState, setFilterState, setCurrentPage } = props;
 
     const handleFilterChange = (event) => {
-        // console.log("cambiando filtro")
         const { name, value, checked } = event.target;
-        // console.log(name, value, checked)
         if (name === 'diets') {
             const toDispatch = () => {
                 let newDiets = [...state.filterState.diets];
-                //   console.log(newDiets)
                 if (checked) {
                     newDiets.push(parseInt(value));
                 } else {
@@ -40,12 +35,9 @@ export default function Filter() {
         } else {
 
             dispatch(setFilterState({ ...state.filterState, [name]: value }))
-            // dispatch(setFilterState((prevFilter) => ({
-            //     ...prevFilter,
-            //     [name]: value
-            // })))
+            
         }
-        // console.log(currentPage) 
+        
         dispatch(setCurrentPage(1))
     }
 
@@ -62,7 +54,7 @@ export default function Filter() {
                             checked={state.filterState.diets.includes(1)}
                             onChange={handleFilterChange}
                         />
-                        Vegetarian
+                        Gluten free
                     </label>
 
                     <label>
@@ -73,7 +65,7 @@ export default function Filter() {
                             checked={state.filterState.diets.includes(2)}
                             onChange={handleFilterChange}
                         />
-                        Vegan
+                        Dairy free
                     </label>
                     <label>
                         <input
@@ -83,13 +75,82 @@ export default function Filter() {
                             checked={state.filterState.diets.includes(3)}
                             onChange={handleFilterChange}
                         />
-                        Gluten Free
+                        Lacto ovo vegetarian
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="diets"
+                            value='4'
+                            checked={state.filterState.diets.includes(4)}
+                            onChange={handleFilterChange}
+                        />
+                        Vegan
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="diets"
+                            value='5'
+                            checked={state.filterState.diets.includes(5)}
+                            onChange={handleFilterChange}
+                        />
+                        Paleolithic
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="diets"
+                            value='6'
+                            checked={state.filterState.diets.includes(6)}
+                            onChange={handleFilterChange}
+                        />
+                        Primal
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="diets"
+                            value='7'
+                            checked={state.filterState.diets.includes(7)}
+                            onChange={handleFilterChange}
+                        />
+                        Whole 30
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="diets"
+                            value='8'
+                            checked={state.filterState.diets.includes(8)}
+                            onChange={handleFilterChange}
+                        />
+                        Pescatarian
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="diets"
+                            value='9'
+                            checked={state.filterState.diets.includes(9)}
+                            onChange={handleFilterChange}
+                        />
+                        Ketogenic
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="diets"
+                            value='10'
+                            checked={state.filterState.diets.includes(10)}
+                            onChange={handleFilterChange}
+                        />
+                        Fodmap friendly
                     </label>
                 </div>
             ) : null}
             {state.applyFilter ? (
-                <div className={styles.checkboxContainer}>
-                    {/* <label>Filtrar por origen:</label> */}
+                <div className={styles.checkboxContainer}>                    
                     <label>
                         <input
                             type="radio"

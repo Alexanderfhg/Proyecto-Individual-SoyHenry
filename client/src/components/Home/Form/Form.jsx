@@ -5,11 +5,10 @@ import { setFormVisible, setFormulario } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Form(props) {
-    // const [state, dispatch] = useReducer(reducer, initialState)
+    
     const state = useSelector((st) => st);
     const dispatch = useDispatch();
 
-    // const { formulario, setFormulario } = props;
     const [errors, setErrors] = useState({});
 
     const handleInputChange = (event) => {
@@ -23,7 +22,6 @@ export default function Form(props) {
             ...state.formulario,
             [name]: value
         }));
-        // console.log(formulario)
     };
 
     const handleDietsChange = (event) => {
@@ -138,7 +136,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            gluten free
+                            Gluten free
                         </label>
                         <label>
                             <input
@@ -149,7 +147,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            dairy free
+                            Dairy free
                         </label>
                         <label>
                             <input
@@ -160,7 +158,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            Vegetarian
+                            Lacto ovo vegetarian
                         </label>
                         <label>
                             <input
@@ -171,7 +169,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            vegan
+                            Vegan
                         </label>
                         <label>
                             <input
@@ -182,7 +180,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            paleolithic
+                            Paleolithic
                         </label>
                         <label>
                             <input
@@ -193,7 +191,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            primal
+                            Primal
                         </label>
                         <label>
                             <input
@@ -203,7 +201,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            whole 30
+                            Whole 30
                         </label>
                         <label>
                             <input
@@ -214,7 +212,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            pescatarian
+                            Pescatarian
                         </label>
                         <label>
                             <input
@@ -225,7 +223,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            ketogenic
+                            Ketogenic
                         </label>
                         <label>
                             <input
@@ -236,7 +234,7 @@ export default function Form(props) {
                                 onChange={handleDietsChange}
                                 className={styles.input}
                             />
-                            fodmap friendly
+                            Fodmap friendly
                         </label>
                     </div>
                     <button /* disabled={Object.keys(errors).length !== 0} */ className={styles.buttonSend} type="submit">Send</button>

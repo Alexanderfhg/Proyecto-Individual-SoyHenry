@@ -14,8 +14,6 @@ function App() {
   const dispatch = useDispatch();
   const state = useSelector((st) => st);
 
-
-
   useEffect(() => {
     filterOrder(state.filterState);
   }, [state.filterState])
@@ -26,14 +24,12 @@ function App() {
   async function onSearch(title) {
 
     dispatch(setRecipesFilter([]))
-    // dispatch(setRecipes([]))
 
     navigate('/home');
     try {
-      // dispatch(setRecipes(title))
+      
       const apiRecipes = await axios.get(`http://localhost:3001/recipes?name=${title}`);
-      if (apiRecipes.data.length) {
-        // console.log('onSearch', apiRecipes.data)
+      if (apiRecipes.data.length) {        
 
         dispatch(setRecipes(apiRecipes.data))
         dispatch(setRecipesFilter(apiRecipes.data))
@@ -46,7 +42,6 @@ function App() {
         }))
 
       } else {
-        // console.log(state)
         filterOrder(state.filterState)
         window.alert("No se encontraron recetas con ese nombre")
       }
@@ -57,23 +52,41 @@ function App() {
   }
 
   async function filterOrder(filter) {
-    // console.log('dietas del fasdkjfña',state.recipes)
-    // console.log("filter -> " , filter)
-    // console.log(filter)
-    // dispatch(setNotFound(false))
+   
     if (filter) {
       const { diets, order, origin } = filter;
       const allRecipesCopy = [...state.recipes];
       let filteredRecipes = allRecipesCopy;
 
       if (diets.includes(1)) {
-        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('lacto ovo vegetarian'));
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('gluten free'));
       }
       if (diets.includes(2)) {
-        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('vegan'));
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('dairy free'));
       }
       if (diets.includes(3)) {
-        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('gluten free'));
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('lacto ovo vegetarian'));
+      }
+      if (diets.includes(4)) {
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('vegan'));
+      }
+      if (diets.includes(5)) {
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('paleolithic'));
+      }
+      if (diets.includes(6)) {
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('primal'));
+      }
+      if (diets.includes(7)) {
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('whole 30'));
+      }
+      if (diets.includes(8)) {
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('pescatarian'));
+      }
+      if (diets.includes(9)) {
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('ketogenic'));
+      }
+      if (diets.includes(10)) {
+        filteredRecipes = filteredRecipes.filter(recipe => recipe.diets.includes('fodmap friendly'));
       }
 
       switch (order) {
