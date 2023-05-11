@@ -4,7 +4,7 @@
   padding: 1rem;
   background-color: #ffcc00;
   clip-path: polygon(0 0, 100% 0, 100% 60%, 50% 100%, 0 60%);
-  height: 160px;
+  height: 150px;
   position: relative;
   /* z-index: 2; */
   
@@ -15,7 +15,7 @@
   position: relative;
   width: 90%;
   background-color: #ffcc00;
-  
+  cursor: pointer;
 }
 
 .navBar {
@@ -32,4 +32,25 @@
   right: 25%;
   border-radius: 60px;
 }
+
+.navButton {
+  font-weight: bold;
+  color: #555;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.navButton:hover {
+  background-color: #ffcc00;
+  color: #FFF;
+}
+
+.active {
+  background-color: #12062e;
+  color: #FFF;
+}
+
 

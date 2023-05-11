@@ -10,18 +10,18 @@ export default function Card(props) {
         <div className={styles.card}>
             <button className={styles.buttonCard} onClick={() => { goDetail() }}>
                 <h3 className={styles.cardTitle}>{props.title}</h3>
-                <div className={styles.cardImgOverlay}>
-                    <img className={styles.cardImg} src={props.image} alt="imageFood" />
-                    <div className={styles.overlay}>
-                        <div className={styles.diets}>
-                            <ul>
-                                {props.diets.map((diet, index) => (
-                                    <li key={index}>{diet}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
+
+                <img className={styles.cardImg} src={props.image} alt="imageFood" />
+
+                <div className={styles.diets}>
+                    <ul>
+                        {props.diets.map((diet, index) => (
+                            <li key={index}>{diet}</li>
+                        ))}
+                    </ul>
                 </div>
+
+
             </button>
         </div>
     );

@@ -39,22 +39,38 @@ export default function Detail(props) {
     if (detail.id < 2000000) {
         return (
             <div className={styles.recipeDetail}>
-                <h2 className={styles.recipeTitle}>{detail.title}</h2>
-                <div className={styles.recipeSummary} dangerouslySetInnerHTML={{ __html: detail.summary }}></div>
-                <h3 className={styles.recipeScore}>healthScore: {detail.healthScore}</h3>
+                <div className={styles.titleContainer}>
+                    <h2 className={styles.recipeTitle}>{detail.title}</h2>
+                </div>
                 <div className={styles.recipeDiets}>
                     {detail.diets.map((diet, index) => <h5 key={index} className={styles.recipeDiet}>{diet}</h5>)}
                 </div>
-                <img className={styles.recipeImage} src={detail.image} alt="Image Food" />
+                <div className={styles.imgSumContainer}>
+                    <div className={styles.imgContainer}>
+                        <img className={styles.recipeImage} src={detail.image} alt="Image Food" />
+                        <div className={styles.healthScoreContainer}>
+                            <h3 className={styles.recipeScore}>Health Score: {detail.healthScore}</h3>
+                        </div>
+                    </div>
+                    <div className={styles.summaryContainer}>
+                        <div className={styles.recipeSummary} dangerouslySetInnerHTML={{ __html: detail.summary }}></div>
+                    </div>
+                </div>
                 <div className={styles.recipeInstructions}>
+                    <h2>Instructions</h2>
                     {detail.instructions.map(instruction => {
                         return (
                             <div key={instruction.number} className={styles.recipeStep}>
-                                <h4 className={styles.recipeStepNumber}>{instruction.number}</h4>
+                                <div>
+                                    <h4 className={styles.recipeStepNumber}>{instruction.number}</h4>
+                                </div>
                                 <div className={styles.recipeIngredients}>
                                     {instruction.ingredients.map((ingredient, index) => <h5 key={index} className={styles.recipeIngredient}>{ingredient.name}</h5>)}
                                 </div>
-                                <p className={styles.recipeStepText}>{instruction.step}</p>
+                                <div></div>
+                                <div>
+                                    <p className={styles.recipeStepText}>{instruction.step}</p>
+                                </div>
                             </div>
                         )
                     })}
@@ -64,14 +80,27 @@ export default function Detail(props) {
     } else {
         return (
             <div className={styles.recipeDetail}>
-                <h2 className={styles.recipeTitle}>{detail.title}</h2>
-                <div className={styles.recipeSummary}>{detail.summary}</div>
-                <h3 className={styles.recipeScore}>healthScore: {detail.healthScore}</h3>
+                <div className={styles.titleContainer}>
+                    <h2 className={styles.recipeTitle}>{detail.title}</h2>
+                </div>
                 <div className={styles.recipeDiets}>
                     {detail.diets.map((diet, index) => <h5 key={index} className={styles.recipeDiet}>{diet}</h5>)}
                 </div>
-                <img className={styles.recipeImage} src={detail.image} alt="Image Food" />
-                <h4 className={styles.recipeProcess}>{detail.process}</h4>
+                <div className={styles.imgSumContainer}>
+                    <div className={styles.imgContainer}>
+                        <img className={styles.recipeImage} src={detail.image} alt="Image Food" />
+                        <div className={styles.healthScoreContainer}>
+                            <h3 className={styles.recipeScore}>Health Score: {detail.healthScore}</h3>
+                        </div>
+                    </div>
+                    <div className={styles.summaryContainer}>
+                        <div className={styles.recipeSummary} dangerouslySetInnerHTML={{ __html: detail.summary }}></div>
+                    </div>
+                </div>
+                <div className={styles.recipeInstructions}>
+                    <h2>Instructions</h2>
+                    <p className={styles.recipeStepText} >{detail.process}</p>
+                </div>
             </div>
         )
     }

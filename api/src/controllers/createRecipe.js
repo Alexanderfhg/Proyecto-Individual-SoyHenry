@@ -15,7 +15,7 @@ const createRecipe = async (recipe) => {
         if(recipe.diets.includes(10)) nameDiets.push('fodmap friendly ');
     }
     selectDiets();
-    console.log(nameDiets)
+    console.log(recipe)
     try {
         const newRecipe = await Recipe.create({
             id: recipe.id,
@@ -27,7 +27,7 @@ const createRecipe = async (recipe) => {
             diets: nameDiets
         })
         newRecipe.addDiets(recipe.diets)
-        console.log(newRecipe.dataValues)
+        // console.log(newRecipe.dataValues)
         return newRecipe.dataValues;
     } catch (error) {
         console.log(error)

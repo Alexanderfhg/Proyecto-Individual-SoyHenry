@@ -1,7 +1,6 @@
 import { useReducer, useState } from 'react';
 import styles from './Form.module.css';
 import validate from './validation';
-import reducer, { initialState } from '../../../redux/reducer';
 import { setFormVisible, setFormulario } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,7 +13,6 @@ export default function Form(props) {
     const [errors, setErrors] = useState({});
 
     const handleInputChange = (event) => {
-        // console.log(event)
         const { name, value } = event.target;
 
         dispatch(setFormulario({
@@ -51,44 +49,68 @@ export default function Form(props) {
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        props.createRecipe(state.formulario);
-
-        dispatch(setFormulario({
-            id: ++state.formulario.id,
-            title: '',
-            image: '',
-            summary: '',
-            healthScore: 0,
-            process: '',
-            diets: [],
-        }))
+        if(Object.keys(errors).length === 0){
+            event.preventDefault();
+            props.createRecipe(state.formulario);
+    
+            dispatch(setFormulario({
+                id: ++state.formulario.id,
+                title: '',
+                image: '',
+                summary: '',
+                healthScore: 0,
+                process: '',
+                diets: [],
+            }))
+            props.onSearch('');
+            dispatch(setFormVisible(false));
+        } else {
+            event.preventDefault();            
+            alert('Please complete all required fields before submitting the form')
+        }
     };
 
     const handleCreateClick = () => {
-        state.formVisible ? dispatch(setFormVisible(false)) : dispatch(setFormVisible(true));
+        if (state.formVisible) {
+            dispatch(setFormVisible(false))
+            dispatch(setFormulario({
+                id: state.formulario.id,
+                title: '',
+                image: '',
+                summary: '',
+                healthScore: 0,
+                process: '',
+                diets: [],
+            }))
+            
+        } else {
+            setErrors(validate({}))
+            dispatch(setFormVisible(true))
+        }
     };
+
 
     return (
         <div className={styles.formContainer}>
             <button className={styles.createButton} onClick={handleCreateClick}>
-                Crear nueva receta
+                {!state.formVisible ? 'Create new recipe' : 'X Cancel'}
             </button>
             {state.formVisible ? (
                 <form className={styles.nuevaRecetaFormulario} onSubmit={handleSubmit}>
                     <div className={styles.name}>
-                        <label htmlFor="title">Nombre:</label>
+                        <label htmlFor="title">Name:</label>
                         <input className={styles.input} type="text" id="title" name="title" value={state.formulario.title} onChange={handleInputChange} />
-                        <span>{errors.title && errors.title}</span>
+                        <p>{errors.title && errors.title}</p>
                     </div>
 
                     <div className={styles.image}>
-                        <label htmlFor="image">Imagen:</label>
+                        <label htmlFor="image">Image:</label>
                         <input className={styles.input} type="text" id="image" name="image" value={state.formulario.image} onChange={handleInputChange} />
+                        <p>{errors.image && errors.image}</p>
                     </div>
 
                     <div>
-                        <label htmlFor="summary">Resumen:</label>
+                        <label htmlFor="summary">Summary:</label>
                         <textarea id="summary" name="summary" value={state.formulario.summary} onChange={handleInputChange} />
                         <p>{errors.summary && errors.summary}</p>
                     </div>
@@ -100,13 +122,13 @@ export default function Form(props) {
                     </div>
 
                     <div>
-                        <label htmlFor="process">Proceso:</label>
+                        <label htmlFor="process">Process:</label>
                         <textarea id="process" name="process" value={state.formulario.process} onChange={handleInputChange} />
                         <p>{errors.process && errors.process}</p>
                     </div>
 
                     <div>
-                        <label>Seleccione las dietas:</label>
+                        <label>Select diets:</label>
                         <label>
                             <input
                                 type="checkbox"
@@ -217,7 +239,7 @@ export default function Form(props) {
                             fodmap friendly
                         </label>
                     </div>
-                    <button className={styles.buttonSend} type="submit">Enviar</button>
+                    <button /* disabled={Object.keys(errors).length !== 0} */ className={styles.buttonSend} type="submit">Send</button>
                 </form>
             ) : null}
         </div>

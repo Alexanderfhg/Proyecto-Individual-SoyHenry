@@ -5,9 +5,8 @@ import Nav from './components/Home/NavBar/NavBar';
 import axios from 'axios';
 import Cards from './components/Home/Cards/Cards'
 import Detail from './components/Home/Detail/Detail';
-import { useState, useEffect, useReducer } from 'react';
-import reducer, { initialState } from './redux/reducer';
-import { setRecipes, setRecipesFilter, setCurrentPage, setNotFound, setFilterState } from './redux/actions';
+import { useEffect } from 'react';
+import { setRecipes, setRecipesFilter, setCurrentPage, setFilterState } from './redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
@@ -26,7 +25,7 @@ function App() {
 
   async function onSearch(title) {
 
-    // dispatch(setRecipesFilter([]))
+    dispatch(setRecipesFilter([]))
     // dispatch(setRecipes([]))
 
     navigate('/home');
@@ -122,9 +121,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing onSearch={onSearch} />} />
         <Route path='/home' element={<Cards
-
           createRecipe={createRecipe}
-
+          onSearch={onSearch}
         />} />
         <Route path='/detail/:id' element={<Detail />} />
       </Routes>

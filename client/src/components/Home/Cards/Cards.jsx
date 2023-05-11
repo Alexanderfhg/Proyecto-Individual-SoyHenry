@@ -3,23 +3,30 @@ import Form from '../Form/Form';
 import Filter from '../Filter/Filter';
 import styles from './Cards.module.css';
 import { useState, useEffect, useReducer } from 'react';
-import reducer, { initialState } from '../../../redux/reducer';
 import { setCurrentPage } from '../../../redux/actions';
 import { useSelector, useDispatch } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons'
 
 export default function Cards(props) {
-    // const [dispatch] = useReducer(reducer, initialState);
+    
     const dispatch = useDispatch();
     const state = useSelector((st) => st)
 
-    // const { recipes, currentPage, setCurrentPage } = props;
-    // console.log('estadoooo', state);
-    const totalPages = Math.ceil(state.recipesFilter.length / 8);
+    const [dispelDiv, setDispelDiv] = useState(false)
+    useEffect(() => {
+        if (state.selectDiets || state.applyFilter || state.applyOrder) {
+            setDispelDiv(true);
+        } else {
+            setDispelDiv(false);
+        }
+    })
+    
+    const totalPages = Math.ceil(state.recipesFilter.length / 9);
 
-    const startIndex = (state.currentPage - 1) * 8;
-    const endIndex = startIndex + 8;
+    const startIndex = (state.currentPage - 1) * 9;
+    const endIndex = startIndex + 9;
     const recipesForPage = state.recipesFilter.slice(startIndex, endIndex)
-    const prev = '<', next = '>';
 
     const nextPage = () => {
         const nextPage = state.currentPage + 1;
@@ -40,23 +47,15 @@ export default function Cards(props) {
         localStorage.setItem('currentPage', state.currentPage);
     }, [state.currentPage]);
 
-    // if(!recipes.length){
-    //     return (
-    //         <div className={styles.loadingContainer}>
-    //             <span className={styles.loader}></span>
-    //         </div>
-    //     )    
-    // }
-
     return (
-        
+
         <div className={styles.container}>
             <div>
-                <Filter                
+                <Filter
                 />
             </div>
             {state.recipesFilter.length ? (
-                <div className={styles.cardsContainer}>
+                <div className={`${styles.cardsContainer} ${dispelDiv ? styles.dispel : ''} ${state.formVisible ? styles.dispel : ''}`}>
                     <div className={styles.cards}>
                         {recipesForPage.map(recipe => (
                             <Card
@@ -71,7 +70,12 @@ export default function Cards(props) {
                     </div>
                     <div className={styles.buttonContainer}>
                         <div className={styles.buttonPag}>
-                            <button onClick={previousPage} disabled={state.currentPage === 1}>{prev}</button>
+                            <button onClick={() => dispatch(setCurrentPage(1))} disabled={state.currentPage === 1}>
+                                <FontAwesomeIcon icon={faAngleDoubleLeft} />
+                            </button>
+                            <button onClick={previousPage} disabled={state.currentPage === 1}>
+                                <FontAwesomeIcon icon={faChevronLeft} />
+                            </button>
                         </div>
                         <div className={styles.buttonPag}>
                             {Array.from({ length: totalPages }, (_, index) => (
@@ -87,7 +91,13 @@ export default function Cards(props) {
                         <div className={styles.buttonPag}>
                             <button
                                 onClick={nextPage}
-                                disabled={state.currentPage === totalPages || state.recipes.length === 0}>{next}
+                                disabled={state.currentPage === totalPages || state.recipes.length === 0}>
+                                <FontAwesomeIcon icon={faChevronRight} />
+                            </button>
+                            <button
+                                onClick={() => dispatch(setCurrentPage(totalPages))}
+                                disabled={state.currentPage === totalPages || state.recipes.length === 0}>
+                                <FontAwesomeIcon icon={faAngleDoubleRight} />
                             </button>
                         </div>
                     </div>
@@ -97,9 +107,10 @@ export default function Cards(props) {
                     <span className={styles.loader}></span>
                 </div>
             )}
-            <div className={styles.formContainer}>
+            <div className={`${styles.formContainer} ${dispelDiv ? styles.dispel : ''}`}>
                 <Form
-                    createRecipe={props.createRecipe}               
+                    createRecipe={props.createRecipe}
+                    onSearch={props.onSearch}
                 />
             </div>
         </div>
